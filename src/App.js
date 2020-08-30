@@ -12,11 +12,11 @@ const Content = styled.div`
 
 const ListContainer = styled.div`
   padding: 20px;
-  width: 70%;
+  width: 65%;
 `;
 
 const OrderContainer = styled.div`
-  width: 30%;
+  width: 35%;
   padding: 20px;
 `;
 
@@ -30,7 +30,7 @@ function App() {
         <ListContainer>
           <ProductList />
         </ListContainer>
-        <OrderContainer>Order</OrderContainer>
+        <OrderContainer>Cart</OrderContainer>
       </Content>
     </>
   );

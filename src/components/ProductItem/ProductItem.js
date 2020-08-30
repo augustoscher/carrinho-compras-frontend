@@ -22,7 +22,7 @@ const Content = styled.div`
 `;
 
 const Slot = styled.div`
-  padding: 10px 0px 10px 25px;
+  padding: 10px 30px;
 
   p {
     font-size: 20px;
@@ -32,6 +32,12 @@ const Slot = styled.div`
 
   span {
     color: #7c7e83;
+  }
+
+  button {
+    margin: 25px;
+    width: 120px;
+    height: 30px;
   }
 `;
 
@@ -56,6 +62,9 @@ const ProductItem = ({ id, name, photo, price, stock }) => (
         <p>
           <strong>{stock}</strong>
         </p>
+      </Slot>
+      <Slot>
+        <button>Add to Cart</button>
       </Slot>
     </Content>
   </Container>
