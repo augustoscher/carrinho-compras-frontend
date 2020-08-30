@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useContext, useReducer } from 'react';
+import styled from 'styled-components';
+
 import ActionBar from './components/ActionBar/ActionBar';
 import CardButton from './components/ActionBar/CardButton';
-import styled from 'styled-components';
 import ProductList from './components/ProductList/ProductList';
+import Cart from './components/Cart/Cart';
+
+import Context from './context';
+import reducer from './reducer';
 
 const Content = styled.div`
   padding: 20px;
@@ -11,18 +16,26 @@ const Content = styled.div`
 `;
 
 const ListContainer = styled.div`
-  padding: 20px;
   width: 65%;
 `;
 
-const OrderContainer = styled.div`
+const CartContainer = styled.div`
   width: 35%;
-  padding: 20px;
+  margin-left: 8px;
+  /* padding: 20px; */
+  border: 1px solid #d7dff0;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.04);
+  border-radius: 4px;
+  background: #fbfcff;
+  display: flex;
 `;
 
 function App() {
+  const initialState = useContext(Context);
+  const [state, dispatch] = useReducer(reducer, initialState);
+
   return (
-    <>
+    <Context.Provider value={{ state, dispatch }}>
       <ActionBar>
         <CardButton text="Items" value="9" />
       </ActionBar>
@@ -30,9 +43,11 @@ function App() {
         <ListContainer>
           <ProductList />
         </ListContainer>
-        <OrderContainer>Cart</OrderContainer>
+        <CartContainer>
+          <Cart title="Cart Items" />
+        </CartContainer>
       </Content>
-    </>
+    </Context.Provider>
   );
 }
 

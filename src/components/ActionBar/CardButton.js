@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import Context from '../../context';
 
 const Button = styled.button`
   font-size: 1rem;
@@ -18,7 +19,11 @@ const Button = styled.button`
   }
 `;
 
-const CardButton = ({ value, text }) => <Button>{`${text}: ${value}`}</Button>;
+const CardButton = ({ text }) => {
+  const { state } = useContext(Context);
+
+  return <Button>{`${text}: ${state.cart.products.length}`}</Button>;
+};
 
 CardButton.propTypes = {
   value: PropTypes.string,

@@ -1,5 +1,6 @@
 import React from 'react';
-import ProductList, { GET_PRODUCTS } from './ProductList';
+import ProductList from './ProductList';
+import { getProduct } from '../../graphql/Queries';
 import { render } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 
@@ -8,7 +9,7 @@ describe('ProductList', () => {
     const mocks = [
       {
         request: {
-          query: GET_PRODUCTS,
+          query: getProduct,
         },
         result: {
           data: {
@@ -43,7 +44,7 @@ describe('ProductList', () => {
     const mocks = [
       {
         request: {
-          query: GET_PRODUCTS,
+          query: getProduct,
         },
         error: new Error(':('),
       },

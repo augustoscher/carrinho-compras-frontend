@@ -1,21 +1,10 @@
 import React from 'react';
 import ProductItem from '../ProductItem/ProductItem';
-import { useQuery, gql } from '@apollo/client';
-
-export const GET_PRODUCTS = gql`
-  query getProduct {
-    getProduct {
-      id
-      name
-      photo
-      price
-      stock
-    }
-  }
-`;
+import { useQuery } from '@apollo/client';
+import { getProduct } from '../../graphql/Queries';
 
 const ProductList = () => {
-  const { loading, error, data } = useQuery(GET_PRODUCTS);
+  const { loading, error, data } = useQuery(getProduct);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
