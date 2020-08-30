@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 
 describe('ProductList', () => {
-  test.only('should render product list on load', async () => {
+  test('should render product list on load', async () => {
     const mocks = [
       {
         request: {
@@ -37,5 +37,26 @@ describe('ProductList', () => {
     await new Promise(resolve => setTimeout(resolve, 0));
 
     expect(getByText('Smartwatch')).toBeInTheDocument();
+  });
+
+  test('should show error message', async () => {
+    const mocks = [
+      {
+        request: {
+          query: GET_PRODUCTS,
+        },
+        error: new Error(':('),
+      },
+    ];
+
+    const { getByText } = render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <ProductList />
+      </MockedProvider>
+    );
+
+    await new Promise(resolve => setTimeout(resolve, 0));
+
+    expect(getByText('Error :(')).toBeInTheDocument();
   });
 });
