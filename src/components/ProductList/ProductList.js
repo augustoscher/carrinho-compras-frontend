@@ -2,7 +2,7 @@ import React from 'react';
 import ProductItem from '../ProductItem/ProductItem';
 import { useQuery, gql } from '@apollo/client';
 
-const GET_PRODUCTS = gql`
+export const GET_PRODUCTS = gql`
   query getProduct {
     getProduct {
       id

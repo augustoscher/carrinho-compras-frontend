@@ -1,0 +1,82 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App match snapshot 1`] = `
+<DocumentFragment>
+  .c0 {
+  background-color: #282c34;
+  padding: 15px 15px;
+  background-position: center;
+  text-align: right;
+  max-height: 50px;
+}
+
+.c1 {
+  width: 100%;
+}
+
+.c2 {
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 12px 36px;
+  cursor: pointer;
+  background-color: #ffc107;
+  border: 2px solid #ffc107;
+  color: #4d4d4d;
+}
+
+.c2:hover:enabled {
+  background-color: #c79100;
+  border-color: #c79100;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="c1"
+    >
+      <button
+        class="c2"
+      >
+        Items: 9
+      </button>
+    </div>
+  </div>
+  .c0 {
+  padding: 20px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100%;
+}
+
+.c1 {
+  padding: 20px;
+  width: 65%;
+}
+
+.c2 {
+  width: 35%;
+  padding: 20px;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="c1"
+    >
+      <p>
+        Loading...
+      </p>
+    </div>
+    <div
+      class="c2"
+    >
+      Cart
+    </div>
+  </div>
+</DocumentFragment>
+`;
