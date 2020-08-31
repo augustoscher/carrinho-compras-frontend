@@ -1,17 +1,17 @@
 export default function reducer(state, action) {
   switch (action.type) {
-    case 'ADD_CONTENT':
+    case 'FETCH_PRODUCTS':
       return {
         ...state,
-        songs: [...new Set([...state.songs, ...action.payload])],
+        productList: [...new Set([...state.productList, ...action.payload])],
       };
-    case 'DELETE_CONTENT':
+    case 'DELETE_PRODUCTS':
       //payload is an id.
       //remove song which has song. id
       // console.log('...action.payload', action.payload);
       // const newsongs = state.songs.filter(id => id !== action.payload.id);
       return {
-        songs: [],
+        productList: [],
       };
     default:
       return state;

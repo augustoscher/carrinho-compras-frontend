@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+// import Context from '../../context';
 
 const Container = styled.div`
   border: 1px solid #d7dff0;
