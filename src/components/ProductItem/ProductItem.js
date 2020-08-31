@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Context from '../../context';
 
+import TextSlot from './TextSlot';
+
 const Container = styled.div`
   border: 1px solid #d7dff0;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.04);
@@ -25,16 +27,6 @@ const Content = styled.div`
 const Slot = styled.div`
   padding: 10px 30px;
 
-  p {
-    font-size: 20px;
-    font-weight: 500;
-    margin-top: 8px;
-  }
-
-  span {
-    color: #7c7e83;
-  }
-
   button {
     margin: 25px;
     width: 120px;
@@ -50,28 +42,14 @@ const ProductItem = ({ id, name, photo, price, stock }) => {
       payload: [{ id, name, photo, price, stock }],
     });
   };
+
   return (
     <Container>
       <Img src={photo} />
       <Content>
-        <Slot>
-          <span>Cod: {id}</span>
-          <p>
-            <strong>{name}</strong>
-          </p>
-        </Slot>
-        <Slot>
-          <span>Price:</span>
-          <p>
-            <strong>{price}</strong>
-          </p>
-        </Slot>
-        <Slot>
-          <span>Stock:</span>
-          <p>
-            <strong>{stock}</strong>
-          </p>
-        </Slot>
+        <TextSlot label={`Cod: ${id}`} text={name} />
+        <TextSlot label="Price:" text={price} />
+        <TextSlot label="Stock:" text={stock} />
         <Slot>
           <button onClick={handleClick}>Add to Cart</button>
         </Slot>
