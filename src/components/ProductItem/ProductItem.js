@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-// import Context from '../../context';
+import Context from '../../context';
 
 const Container = styled.div`
   border: 1px solid #d7dff0;
@@ -42,34 +42,43 @@ const Slot = styled.div`
   }
 `;
 
-const ProductItem = ({ id, name, photo, price, stock }) => (
-  <Container>
-    <Img src={photo} />
-    <Content>
-      <Slot>
-        <span>Cod: {id}</span>
-        <p>
-          <strong>{name}</strong>
-        </p>
-      </Slot>
-      <Slot>
-        <span>Price:</span>
-        <p>
-          <strong>{price}</strong>
-        </p>
-      </Slot>
-      <Slot>
-        <span>Stock:</span>
-        <p>
-          <strong>{stock}</strong>
-        </p>
-      </Slot>
-      <Slot>
-        <button>Add to Cart</button>
-      </Slot>
-    </Content>
-  </Container>
-);
+const ProductItem = ({ id, name, photo, price, stock }) => {
+  const { dispatch } = useContext(Context);
+  const handleClick = () => {
+    dispatch({
+      type: 'ADD_PRODUCT',
+      payload: [{ id, name, photo, price, stock }],
+    });
+  };
+  return (
+    <Container>
+      <Img src={photo} />
+      <Content>
+        <Slot>
+          <span>Cod: {id}</span>
+          <p>
+            <strong>{name}</strong>
+          </p>
+        </Slot>
+        <Slot>
+          <span>Price:</span>
+          <p>
+            <strong>{price}</strong>
+          </p>
+        </Slot>
+        <Slot>
+          <span>Stock:</span>
+          <p>
+            <strong>{stock}</strong>
+          </p>
+        </Slot>
+        <Slot>
+          <button onClick={handleClick}>Add to Cart</button>
+        </Slot>
+      </Content>
+    </Container>
+  );
+};
 
 ProductItem.defaultProps = {
   id: '',
