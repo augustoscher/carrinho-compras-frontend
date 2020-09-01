@@ -38,8 +38,12 @@ const ProductItem = ({ id, name, photo, price, stock }) => {
   const { dispatch } = useContext(Context);
   const handleClick = () => {
     dispatch({
-      type: 'ADD_PRODUCT',
-      payload: [{ id, name, photo, price, stock }],
+      type: 'DECREMENT_STOCK',
+      payload: { id },
+    });
+    dispatch({
+      type: 'ADD_TO_CART',
+      payload: { id, name, photo, price, qtd: 1 },
     });
   };
 
@@ -48,10 +52,12 @@ const ProductItem = ({ id, name, photo, price, stock }) => {
       <Img src={photo} />
       <Content>
         <TextSlot label={`Cod: ${id}`} text={name} />
-        <TextSlot label="Price:" text={price} />
-        <TextSlot label="Stock:" text={stock} />
+        <TextSlot label="Price:" text={String(price)} />
+        <TextSlot label="Stock:" text={String(stock)} />
         <Slot>
-          <button onClick={handleClick}>Add to Cart</button>
+          <button disabled={stock === 0} onClick={handleClick}>
+            Add to Cart
+          </button>
         </Slot>
       </Content>
     </Container>

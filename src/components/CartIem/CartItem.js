@@ -7,11 +7,10 @@ const Img = styled.img`
   height: 55px;
 `;
 
-const CartItem = ({ name, photo, price }) => (
+const CartItem = ({ name, photo, price, qtd }) => (
   <>
     <Img src={photo} />
-    <p>{name}</p>
-    <p>{price}</p>
+    <p>{`${name} - ${price} - ${qtd}`}</p>
   </>
 );
 
@@ -19,12 +18,14 @@ CartItem.defaultProps = {
   name: '',
   photo: '',
   price: 0,
+  qtd: 0,
 };
 
 CartItem.propTypes = {
   name: PropTypes.string,
   photo: PropTypes.string,
   price: PropTypes.number,
+  qtd: PropTypes.number,
 };
 
 export default CartItem;

@@ -31,6 +31,7 @@ const Cart = ({ title }) => {
               name={p.name}
               photo={p.photo}
               price={p.price}
+              qtd={p.qtd}
             />
           ))}
       </Root>
