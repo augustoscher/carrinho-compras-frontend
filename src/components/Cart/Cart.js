@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import CartItem from '../CartIem/CartItem';
+import PaymentInfo from './PaymentInfo';
 import Context from '../../context';
 import styled from 'styled-components';
 
@@ -16,24 +17,26 @@ const Header = styled.div`
 
 const Cart = ({ title }) => {
   const { state } = useContext(Context);
+  const { cart } = state;
 
-  if (state) {
+  if (state && cart.products.length > 0) {
     return (
       <Root>
         <Header>
           <h1>{title}</h1>
         </Header>
 
-        {state.cart &&
-          state.cart.products.map(p => (
-            <CartItem
-              key={p.id}
-              name={p.name}
-              photo={p.photo}
-              price={p.price}
-              qtd={p.qtd}
-            />
-          ))}
+        {cart.products.map(p => (
+          <CartItem
+            key={p.id}
+            name={p.name}
+            photo={p.photo}
+            price={p.price}
+            qtd={p.qtd}
+            total={p.total}
+          />
+        ))}
+        <PaymentInfo total={cart.total} />
       </Root>
     );
   }

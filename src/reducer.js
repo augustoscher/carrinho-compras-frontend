@@ -16,6 +16,7 @@ const changeProduct = (state, product, payload) => ({
   ...state,
   cart: {
     ...state.cart,
+    total: state.cart.total + product.price,
     products: state.cart.products.map(item =>
       item.id === product.id ? { ...item, ...payload } : item
     ),
@@ -37,6 +38,7 @@ const addProduct = (state, action) => {
   if (existing) {
     return changeProduct(state, existing, {
       qtd: existing.qtd + 1,
+      total: existing.total + existing.price,
     });
   }
 
@@ -44,6 +46,7 @@ const addProduct = (state, action) => {
     ...state,
     cart: {
       ...state.cart,
+      total: state.cart.total + action.payload.price,
       products: [...new Set([...state.cart.products, ...[action.payload]])],
     },
   };

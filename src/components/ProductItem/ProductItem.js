@@ -44,7 +44,7 @@ const ProductItem = ({ id, name, photo, price, stock }) => {
     });
     dispatch({
       type: 'ADD_TO_CART',
-      payload: { id, name, photo, price, qtd: 1 },
+      payload: { id, name, photo, price, qtd: 1, total: price },
     });
   };
 
