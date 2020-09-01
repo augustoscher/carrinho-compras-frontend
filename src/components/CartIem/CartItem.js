@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { currencyFormatter } from '../../util/util';
 
+import RemovableContainer from '../RemovableContainer/RemovableContainer';
+
 const Img = styled.img`
   width: 95px;
   height: 95px;
@@ -22,14 +24,16 @@ const Content = styled.div`
 `;
 
 const CartItem = ({ name, photo, price, qtd, total }) => (
-  <Root>
-    <Img src={photo} />
-    <Content>
-      <p>{`${qtd}x ${name}`}</p>
-      <p>{`Price: ${currencyFormatter(price)}`}</p>
-      <p>{`Total: ${currencyFormatter(total)}`}</p>
-    </Content>
-  </Root>
+  <RemovableContainer onRemove={() => console.log('remove')}>
+    <Root>
+      <Img src={photo} />
+      <Content>
+        <p>{`${qtd}x ${name}`}</p>
+        <p>{`Price: ${currencyFormatter(price)}`}</p>
+        <p>{`Total: ${currencyFormatter(total)}`}</p>
+      </Content>
+    </Root>
+  </RemovableContainer>
 );
 
 CartItem.defaultProps = {
