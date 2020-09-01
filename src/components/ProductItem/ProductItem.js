@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Context from '../../context';
+import { currencyFormatter } from '../../util/util';
 
 import TextSlot from './TextSlot';
 
@@ -52,7 +53,7 @@ const ProductItem = ({ id, name, photo, price, stock }) => {
       <Img src={photo} />
       <Content>
         <TextSlot label={`Cod: ${id}`} text={name} />
-        <TextSlot label="Price:" text={String(price)} />
+        <TextSlot label="Price:" text={currencyFormatter(price)} />
         <TextSlot label="Stock:" text={String(stock)} />
         <Slot>
           <button disabled={stock === 0} onClick={handleClick}>
