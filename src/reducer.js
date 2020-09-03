@@ -1,16 +1,15 @@
-// const removeProduct = (state, action) => {
-//   const products = [
-//     ...state.cart.products.slice(0, action.productId),
-//     ...state.cart.products.slice(action.productId + 1),
-//   ];
-//   return {
-//     ...state,
-//     cart: {
-//       ...state.cart,
-//       products,
-//     },
-//   };
-// };
+const removeProductFromCart = (state, action) => {
+  return {
+    ...state,
+    cart: {
+      ...state.cart,
+      total: state.cart.total - action.payload.total,
+      products: state.cart.products.filter(
+        product => product.id !== action.payload.id
+      ),
+    },
+  };
+};
 
 const changeProduct = (state, product, payload) => ({
   ...state,
@@ -27,6 +26,15 @@ const decrementStock = (state, action) => ({
   ...state,
   productList: state.productList.map(item =>
     item.id === action.payload.id ? { ...item, stock: item.stock - 1 } : item
+  ),
+});
+
+const incrementStock = (state, action) => ({
+  ...state,
+  productList: state.productList.map(item =>
+    item.id === action.payload.id
+      ? { ...item, stock: item.stock + action.payload.qtd }
+      : item
   ),
 });
 
@@ -63,20 +71,14 @@ export default function reducer(state, action) {
     case 'DECREMENT_STOCK': {
       return decrementStock(state, action);
     }
+    case 'INCREMENT_STOCK': {
+      return incrementStock(state, action);
+    }
     case 'ADD_TO_CART': {
       return addProduct(state, action);
     }
     case 'REMOVE_FROM_CART': {
-      // productList: [],
-      // cart: {
-      //   customer: '',
-      //   creditCard: '',
-      //   total: 0,
-      //   products: [],
-      // },
-      return {
-        productList: [],
-      };
+      return removeProductFromCart(state, action);
     }
     default:
       return state;
