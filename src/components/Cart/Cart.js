@@ -4,6 +4,7 @@ import CartItem from '../CartIem/CartItem';
 import PaymentInfo from './PaymentInfo';
 import Context from '../../context';
 import styled from 'styled-components';
+import { getStock } from '../../selector';
 
 const Root = styled.div`
   display: block;
@@ -35,6 +36,7 @@ const Cart = ({ title }) => {
             price={p.price}
             qtd={p.qtd}
             total={p.total}
+            stock={getStock(state, p.id)}
           />
         ))}
         <PaymentInfo total={cart.total} />

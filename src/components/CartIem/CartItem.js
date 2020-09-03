@@ -5,6 +5,13 @@ import { currencyFormatter } from '../../util/util';
 
 import RemovableContainer from '../RemovableContainer/RemovableContainer';
 import Context from '../../context';
+import {
+  addToCart,
+  removeFromCart,
+  decrementStock,
+  incrementStock,
+  removeQtdFromProductCart,
+} from '../../actionCreators';
 
 const Img = styled.img`
   width: 95px;
@@ -24,17 +31,33 @@ const Content = styled.div`
   }
 `;
 
-const CartItem = ({ id, name, photo, price, qtd, total }) => {
+const Button = styled.button`
+  margin: 6px 0 0 8px;
+  font-weight: 600;
+  padding: 2px 8px;
+  cursor: pointer;
+  color: #4d4d4d;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+`;
+
+const CartItem = ({ id, name, photo, price, qtd, total, stock }) => {
   const { dispatch } = useContext(Context);
   const handleRemove = () => {
-    dispatch({
-      type: 'INCREMENT_STOCK',
-      payload: { id, qtd },
-    });
-    dispatch({
-      type: 'REMOVE_FROM_CART',
-      payload: { id, total },
-    });
+    dispatch(incrementStock({ id, qtd }));
+    dispatch(removeFromCart({ id, total }));
+  };
+
+  const addProduct = () => {
+    dispatch(decrementStock(id));
+    dispatch(addToCart({ id, name, photo, price }));
+  };
+
+  const removeProduct = () => {
+    dispatch(incrementStock({ id, qtd: 1 }));
+    dispatch(removeQtdFromProductCart({ id, price }));
   };
 
   return (
@@ -45,6 +68,12 @@ const CartItem = ({ id, name, photo, price, qtd, total }) => {
           <p>{`${qtd}x ${name}`}</p>
           <p>{`Price: ${currencyFormatter(price)}`}</p>
           <p>{`Total: ${currencyFormatter(total)}`}</p>
+          <Button disabled={stock === 0} onClick={addProduct}>
+            +1
+          </Button>
+          <Button disable={!qtd > 0} onClick={removeProduct}>
+            -1
+          </Button>
         </Content>
       </Root>
     </RemovableContainer>
@@ -58,6 +87,7 @@ CartItem.defaultProps = {
   price: 0,
   qtd: 0,
   total: 0,
+  stock: 0,
 };
 
 CartItem.propTypes = {
@@ -67,6 +97,7 @@ CartItem.propTypes = {
   price: PropTypes.number,
   qtd: PropTypes.number,
   total: PropTypes.number,
+  stock: PropTypes.number,
 };
 
 export default CartItem;

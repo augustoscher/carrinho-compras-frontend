@@ -6,6 +6,8 @@ import { currencyFormatter } from '../../util/util';
 
 import TextSlot from './TextSlot';
 
+import { addToCart, decrementStock } from '../../actionCreators';
+
 const Container = styled.div`
   border: 1px solid #d7dff0;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.04);
@@ -32,20 +34,19 @@ const Slot = styled.div`
     margin: 25px;
     width: 120px;
     height: 30px;
+    cursor: pointer;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
   }
 `;
 
 const ProductItem = ({ id, name, photo, price, stock }) => {
   const { dispatch } = useContext(Context);
   const handleClick = () => {
-    dispatch({
-      type: 'DECREMENT_STOCK',
-      payload: { id },
-    });
-    dispatch({
-      type: 'ADD_TO_CART',
-      payload: { id, name, photo, price, qtd: 1, total: price },
-    });
+    dispatch(decrementStock(id));
+    dispatch(addToCart({ id, name, photo, price }));
   };
 
   return (

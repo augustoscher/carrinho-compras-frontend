@@ -1,23 +1,12 @@
-const removeProductFromCart = (state, action) => {
-  return {
-    ...state,
-    cart: {
-      ...state.cart,
-      total: state.cart.total - action.payload.total,
-      products: state.cart.products.filter(
-        product => product.id !== action.payload.id
-      ),
-    },
-  };
-};
+import { getProductFromCart } from './selector';
 
-const changeProduct = (state, product, payload) => ({
+const incCart = (state, product, productPayload) => ({
   ...state,
   cart: {
     ...state.cart,
     total: state.cart.total + product.price,
     products: state.cart.products.map(item =>
-      item.id === product.id ? { ...item, ...payload } : item
+      item.id === product.id ? { ...item, ...productPayload } : item
     ),
   },
 });
@@ -38,13 +27,24 @@ const incrementStock = (state, action) => ({
   ),
 });
 
+const removeProductFromCart = (state, action) => {
+  return {
+    ...state,
+    cart: {
+      ...state.cart,
+      total: state.cart.total - action.payload.total,
+      products: state.cart.products.filter(
+        product => product.id !== action.payload.id
+      ),
+    },
+  };
+};
+
 const addProduct = (state, action) => {
-  const existing = state.cart.products.filter(
-    product => product.id === action.payload.id
-  )[0];
+  const existing = getProductFromCart(state, action.payload.id);
 
   if (existing) {
-    return changeProduct(state, existing, {
+    return incCart(state, existing, {
       qtd: existing.qtd + 1,
       total: existing.total + existing.price,
     });
@@ -56,6 +56,39 @@ const addProduct = (state, action) => {
       ...state.cart,
       total: state.cart.total + action.payload.price,
       products: [...new Set([...state.cart.products, ...[action.payload]])],
+    },
+  };
+};
+
+const removeQtdFromProductInCart = (state, action) => {
+  const existing = getProductFromCart(state, action.payload.id);
+  if (existing.qtd === 1) {
+    return {
+      ...state,
+      cart: {
+        ...state.cart,
+        total: state.cart.total - action.payload.price,
+        products: state.cart.products.filter(
+          product => product.id !== action.payload.id
+        ),
+      },
+    };
+  }
+
+  return {
+    ...state,
+    cart: {
+      ...state.cart,
+      total: state.cart.total - action.payload.price,
+      products: state.cart.products.map(item =>
+        item.id === action.payload.id
+          ? {
+              ...item,
+              qtd: item.qtd - 1,
+              total: item.total - action.payload.price,
+            }
+          : item
+      ),
     },
   };
 };
@@ -79,6 +112,9 @@ export default function reducer(state, action) {
     }
     case 'REMOVE_FROM_CART': {
       return removeProductFromCart(state, action);
+    }
+    case 'REMOVE_QTD_FROM_PRODUCT_CART': {
+      return removeQtdFromProductInCart(state, action);
     }
     default:
       return state;
