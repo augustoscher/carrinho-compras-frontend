@@ -5,3 +5,5 @@ export const getStock = (state, productId) => {
 
 export const getProductFromCart = (state, productId) =>
   state.cart.products.filter(product => product.id === productId)[0];
+
+export const getCart = state => state.cart;

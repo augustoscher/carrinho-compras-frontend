@@ -1,7 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
+
+import { graphql } from 'react-apollo';
+import { createOrder } from '../../graphql/Mutations';
+
 import { currencyFormatter } from '../../util/util';
+import Context from '../../context';
+import { setCustomerName, setCreditCard } from '../../actionCreators';
 
 const Root = styled.div`
   padding: 0 40px 0 0;
@@ -33,7 +39,23 @@ const PaymentLine = styled.div`
   }
 `;
 
-const PaymentInfo = ({ total }) => {
+const PaymentInfo = ({ total, mutate }) => {
+  const { state, dispatch } = useContext(Context);
+
+  const handleConfirm = evt => {
+    evt.preventDefault();
+
+    mutate({
+      variables: {
+        order: {
+          ...state.cart,
+        },
+      },
+    }).then(res => {
+      console.log('res', res);
+    });
+  };
+
   return (
     <Root>
       <h3>
@@ -42,13 +64,21 @@ const PaymentInfo = ({ total }) => {
       <Payment>
         <PaymentLine>
           <p htmlFor="customer">Customer:</p>
-          <input type="text" name="customer" />
+          <input
+            type="text"
+            name="customer"
+            onChange={e => dispatch(setCustomerName(e.target.value))}
+          />
         </PaymentLine>
         <PaymentLine>
           <p htmlFor="card">Credit Card:</p>
-          <input type="text" name="card" />
+          <input
+            type="number"
+            name="card"
+            onChange={e => dispatch(setCreditCard(e.target.value))}
+          />
         </PaymentLine>
-        <button>Confirm</button>
+        <button onClick={handleConfirm}>Confirm</button>
       </Payment>
     </Root>
   );
@@ -62,4 +92,4 @@ PaymentInfo.propTypes = {
   total: PropTypes.number,
 };
 
-export default PaymentInfo;
+export default graphql(createOrder)(PaymentInfo);

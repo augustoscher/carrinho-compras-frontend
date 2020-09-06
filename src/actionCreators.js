@@ -22,3 +22,13 @@ export const removeQtdFromProductCart = ({ id, price }) => ({
   type: 'REMOVE_QTD_FROM_PRODUCT_CART',
   payload: { id, price },
 });
+
+export const setCustomerName = name => ({
+  type: 'SET_CUSTOMER_NAME',
+  payload: { name },
+});
+
+export const setCreditCard = creditCard => ({
+  type: 'SET_CREDIT_CARD',
+  payload: { creditCard },
+});

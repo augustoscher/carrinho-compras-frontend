@@ -93,6 +93,22 @@ const removeQtdFromProductInCart = (state, action) => {
   };
 };
 
+const setCreditCard = (state, action) => ({
+  ...state,
+  cart: {
+    ...state.cart,
+    creditCard: action.payload.creditCard,
+  },
+});
+
+const setCustomerName = (state, action) => ({
+  ...state,
+  cart: {
+    ...state.cart,
+    customer: action.payload.name,
+  },
+});
+
 export default function reducer(state, action) {
   switch (action.type) {
     case 'FETCH_PRODUCTS': {
@@ -115,6 +131,12 @@ export default function reducer(state, action) {
     }
     case 'REMOVE_QTD_FROM_PRODUCT_CART': {
       return removeQtdFromProductInCart(state, action);
+    }
+    case 'SET_CUSTOMER_NAME': {
+      return setCustomerName(state, action);
+    }
+    case 'SET_CREDIT_CARD': {
+      return setCreditCard(state, action);
     }
     default:
       return state;
