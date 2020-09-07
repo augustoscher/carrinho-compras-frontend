@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import { graphql } from 'react-apollo';
 import { createOrder } from '../../graphql/Mutations';
+import { getProduct } from '../../graphql/Queries';
 
 import { currencyFormatter } from '../../util/util';
 import Context from '../../context';
@@ -59,12 +60,10 @@ const PaymentInfo = ({ total, mutate }) => {
           ...state.cart,
         },
       },
+      refetchQueries: [{ query: getProduct }],
     }).then(
       res => {
         dispatch(orderCreated());
-
-        // dispatch({ type: 'FETCH_PRODUCTS', payload: [{ id: '1', name: 'asd' }] });
-        // }
         const { data } = res;
         alert(`Order ${data.createOrder} created sucessfully.`);
       },
