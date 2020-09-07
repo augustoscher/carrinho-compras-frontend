@@ -109,6 +109,17 @@ const setCustomerName = (state, action) => ({
   },
 });
 
+const resetInitialState = state => ({
+  ...state,
+  productList: [],
+  cart: {
+    customer: '',
+    creditCard: '',
+    total: 0,
+    products: [],
+  },
+});
+
 export default function reducer(state, action) {
   switch (action.type) {
     case 'FETCH_PRODUCTS': {
@@ -137,6 +148,9 @@ export default function reducer(state, action) {
     }
     case 'SET_CREDIT_CARD': {
       return setCreditCard(state, action);
+    }
+    case 'ORDER_CREATED': {
+      return resetInitialState(state);
     }
     default:
       return state;

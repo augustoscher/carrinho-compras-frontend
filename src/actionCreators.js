@@ -32,3 +32,12 @@ export const setCreditCard = creditCard => ({
   type: 'SET_CREDIT_CARD',
   payload: { creditCard },
 });
+
+export const orderCreated = () => ({
+  type: 'ORDER_CREATED',
+});
+
+export const fetchProducts = getProduct => ({
+  type: 'FETCH_PRODUCTS',
+  payload: getProduct,
+});

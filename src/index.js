@@ -4,12 +4,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { ApolloProvider } from 'react-apollo';
-import {
-  // ApolloLink,
-  ApolloClient,
-  InMemoryCache,
-  HttpLink,
-} from 'apollo-client-preset';
+import { ApolloClient, InMemoryCache, HttpLink } from 'apollo-client-preset';
 
 const API = 'http://localhost:3000/dev/graphql';
 

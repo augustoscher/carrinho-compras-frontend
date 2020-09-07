@@ -37,7 +37,7 @@ function App() {
   return (
     <Context.Provider value={{ state, dispatch }}>
       <ActionBar>
-        <CardButton text="Items" value="9" />
+        <CardButton text="Items" value="0" />
       </ActionBar>
       <Content>
         <ListContainer>

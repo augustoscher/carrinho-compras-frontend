@@ -7,7 +7,11 @@ import { createOrder } from '../../graphql/Mutations';
 
 import { currencyFormatter } from '../../util/util';
 import Context from '../../context';
-import { setCustomerName, setCreditCard } from '../../actionCreators';
+import {
+  setCustomerName,
+  setCreditCard,
+  orderCreated,
+} from '../../actionCreators';
 
 const Root = styled.div`
   padding: 0 40px 0 0;
@@ -23,6 +27,10 @@ const Payment = styled.div`
     cursor: pointer;
     color: #4d4d4d;
     margin-top: 8px;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
   }
 `;
 
@@ -51,10 +59,26 @@ const PaymentInfo = ({ total, mutate }) => {
           ...state.cart,
         },
       },
-    }).then(res => {
-      console.log('res', res);
-    });
+    }).then(
+      res => {
+        dispatch(orderCreated());
+
+        // dispatch({ type: 'FETCH_PRODUCTS', payload: [{ id: '1', name: 'asd' }] });
+        // }
+        const { data } = res;
+        alert(`Order ${data.createOrder} created sucessfully.`);
+      },
+      err => {
+        alert(`Oooops! ${err.message} :/`);
+      }
+    );
   };
+
+  const isEmpty = str => str.length === 0 || !str.trim();
+  const isCreditCardPresent = state => !isEmpty(state.cart.creditCard);
+  const isCustomerPresent = state => !isEmpty(state.cart.customer);
+  const isRequiredInfo = state =>
+    isCreditCardPresent(state) && isCustomerPresent(state);
 
   return (
     <Root>
@@ -78,7 +102,9 @@ const PaymentInfo = ({ total, mutate }) => {
             onChange={e => dispatch(setCreditCard(e.target.value))}
           />
         </PaymentLine>
-        <button onClick={handleConfirm}>Confirm</button>
+        <button disabled={!isRequiredInfo(state)} onClick={handleConfirm}>
+          Confirm
+        </button>
       </Payment>
     </Root>
   );

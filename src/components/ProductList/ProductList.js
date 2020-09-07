@@ -5,13 +5,14 @@ import { getProduct } from '../../graphql/Queries';
 
 import ProductItem from '../ProductItem/ProductItem';
 import Context from '../../context';
+import { fetchProducts } from '../../actionCreators';
 
 const ProductList = ({ data: { loading, error, getProduct } }) => {
   const { state, dispatch } = useContext(Context);
 
   useEffect(() => {
     if (getProduct) {
-      dispatch({ type: 'FETCH_PRODUCTS', payload: getProduct });
+      dispatch(fetchProducts(getProduct));
     }
   }, [getProduct]);
 
