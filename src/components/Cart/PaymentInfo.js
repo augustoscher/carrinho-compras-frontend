@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import { graphql } from 'react-apollo';
+import { graphql } from '@apollo/react-hoc';
 import { createOrder } from '../../graphql/Mutations';
 import { getProduct } from '../../graphql/Queries';
 

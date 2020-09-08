@@ -3,18 +3,18 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { ApolloProvider } from 'react-apollo';
-import { ApolloClient, InMemoryCache, HttpLink } from 'apollo-client-preset';
+import { ApolloProvider } from '@apollo/client';
+import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 
 const API = 'http://localhost:3000/dev/graphql';
 
-const httpLink = new HttpLink({
+const link = createHttpLink({
   uri: API,
 });
 
 const client = new ApolloClient({
-  link: httpLink,
   cache: new InMemoryCache(),
+  link: link,
 });
 
 ReactDOM.render(

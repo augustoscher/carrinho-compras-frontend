@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useContext } from 'react';
-import { graphql } from 'react-apollo';
+import { graphql } from '@apollo/react-hoc';
 import { getProduct } from '../../graphql/Queries';
 
 import ProductItem from '../ProductItem/ProductItem';
